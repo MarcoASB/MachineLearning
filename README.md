@@ -1,6 +1,6 @@
 # MachineLearning
 
-Several jupyter notebooks for practicing machine learning with python library `sklearn`
+![ML.jpg](ML.jpg)
 
 ## Supervised ML
 
