@@ -57,7 +57,7 @@ def plot_two_class_knn(X, y, n_neighbors, weights, X_test, y_test):
     
     
     
-def plot_class_regions_for_classifier(clf, X, y, X_test=None, y_test=None, title=None, target_names = None, plot_decision_regions = True):
+def plot_class_regions_for_classifier_subplot(clf, X, y, X_test, y_test, title, subplot, target_names = None, plot_decision_regions = True):
 
     numClasses = numpy.amax(y) + 1
     color_list_light = ['#FFFFAA', '#EFEFEF', '#AAFFAA', '#AAAAFF']
@@ -79,27 +79,25 @@ def plot_class_regions_for_classifier(clf, X, y, X_test=None, y_test=None, title
 
     P = clf.predict(numpy.c_[x2.ravel(), y2.ravel()])
     P = P.reshape(x2.shape)
-    plt.figure()
-    if plot_decision_regions:
-        plt.contourf(x2, y2, P, cmap=cmap_light, alpha = 0.8)
 
-    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, s=plot_symbol_size, edgecolor = 'black')
-    plt.xlim(x_min - x_plot_adjust, x_max + x_plot_adjust)
-    plt.ylim(y_min - y_plot_adjust, y_max + y_plot_adjust)
+    if plot_decision_regions:
+        subplot.contourf(x2, y2, P, cmap=cmap_light, alpha = 0.8)
+
+    subplot.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, s=plot_symbol_size, edgecolor = 'black')
+    subplot.set_xlim(x_min - x_plot_adjust, x_max + x_plot_adjust)
+    subplot.set_ylim(y_min - y_plot_adjust, y_max + y_plot_adjust)
 
     if (X_test is not None):
-        plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, s=plot_symbol_size, marker='^', edgecolor = 'black')
+        subplot.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, s=plot_symbol_size, marker='^', edgecolor = 'black')
         train_score = clf.score(X, y)
         test_score  = clf.score(X_test, y_test)
         title = title + "\nTrain score = {:.2f}, Test score = {:.2f}".format(train_score, test_score)
+
+    subplot.set_title(title)
 
     if (target_names is not None):
         legend_handles = []
         for i in range(0, len(target_names)):
             patch = mpatches.Patch(color=color_list_bold[i], label=target_names[i])
             legend_handles.append(patch)
-        plt.legend(loc=0, handles=legend_handles)
-
-    if (title is not None):
-        plt.title(title)
-    plt.show()
+        subplot.legend(loc=0, handles=legend_handles)
