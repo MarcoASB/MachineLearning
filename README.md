@@ -19,3 +19,10 @@ The dataset contains 30 attributes
 Synthetic datasets for simple and complex regressions and classifications. \
 Also comparisson between models by R<sup>2</sup> score
 
+
+### Linear Regressions
+Test, study and comparisson of several types of linear regressions to find the model that fits better to the data
+* Normal Linear regression
+* Ridge regression 
+* Lasso regression
+* Polynomial regression 
