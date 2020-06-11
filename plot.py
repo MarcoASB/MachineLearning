@@ -165,3 +165,32 @@ def plot_class_regions_for_classifier(clf, X, y, X_test=None, y_test=None, title
     if (title is not None):
         plt.title(title)
     plt.show()
+    
+    
+    
+    
+    
+    
+def plot_decision_tree(clf, feature_names, class_names):
+    # This function requires the pydotplus module and assumes it's been installed.
+    # In some cases (typically under Windows) even after running conda install, there is a problem where the
+    # pydotplus module is not found when running from within the notebook environment.  The following code
+    # may help to guarantee the module is installed in the current notebook environment directory.
+    #
+    # import sys; sys.executable
+    # !{sys.executable} -m pip install pydotplus
+
+    export_graphviz(clf, out_file="adspy_temp.dot", feature_names=feature_names, class_names=class_names, filled = True, impurity = False)
+    with open("adspy_temp.dot") as f:
+        dot_graph = f.read()
+    # Alternate method using pydotplus, if installed.
+    # graph = pydotplus.graphviz.graph_from_dot_data(dot_graph)
+    # return graph.create_png()
+    return graphviz.Source(dot_graph)
+
+def plot_feature_importances(clf, feature_names):
+    c_features = len(feature_names)
+    plt.barh(range(c_features), clf.feature_importances_)
+    plt.xlabel("Feature importance")
+    plt.ylabel("Feature name")
+    plt.yticks(numpy.arange(c_features), feature_names)
